@@ -1,0 +1,97 @@
+@import url(css/reset.css);
+@import url(css/grid.css);
+/*
+	Theme Name: Robostangs v3
+	Theme URL: http://www.robostangs.com/
+	Description: The official Robostangs site design. Created Sunday, Feburary 13, 2011.
+	Author: Team548
+	Author URI: http://www.robostangs.com/
+	Version: 1.0
+*/       
+/* = Global Structure
+-------------------------------------------------------- */
+body
+{
+	background: #474747;
+}
+/* = Typography
+-------------------------------------------------------- */
+body
+{
+	font-family: 'Helvetica Neue', Arial, Tahoma, sans-serif;
+	color: #fff;
+}
+a
+{
+	color: #fc8202;
+	text-decoration: none;
+}
+/* = Utility Classes 
+-------------------------------------------------------- */
+.float-left
+{
+	float: left;
+}
+.float-right
+{
+	float: right;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+/* = Global Elements
+-------------------------------------------------------- */
+#wrapper
+{
+	background: url(images/logomotion_header.png) no-repeat top center;
+}
+#banner
+{
+	height: 367px;
+	display: block;
+	width: 100%;
+}
+#branding
+{
+	background: url(images/robo_logo_header.png) no-repeat;
+	height: 69px;
+	margin-top: 70px;
+}
+#branding #site-title
+{
+	font-size: 35px;
+	font-weight: bold;
+	margin-left: 75px;
+	line-height: 45px;
+}
+#branding #site-description
+{
+	font-size: 14px;
+	text-align: left;
+	margin: 3px 25px 0 78px;
+}
+#branding #site-description span
+{
+	float: right;
+	text-align: right;
+	display: block;
+	font-size: 12px;
+	margin-top: 3px;
+}
