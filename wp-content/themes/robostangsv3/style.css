@@ -26,6 +26,10 @@ a
 	color: #fc8202;
 	text-decoration: none;
 }
+header a
+{
+	color: #fff;
+}
 /* = Utility Classes 
 -------------------------------------------------------- */
 .float-left
@@ -72,7 +76,7 @@ html[xmlns] .clearfix {
 {
 	background: url(images/robo_logo_header.png) no-repeat;
 	height: 69px;
-	margin-top: 70px;
+	margin-top: 80px;
 }
 #branding #site-title
 {
@@ -95,3 +99,29 @@ html[xmlns] .clearfix {
 	font-size: 12px;
 	margin-top: 3px;
 }
+header .sponsors
+{
+	margin-left: 15px;
+	margin-top: 95px;
+}
+header .sponsors li
+{
+	float: left;
+}
+header .sponsors a
+{
+	display: block;
+	height: 45px;
+	padding-left: 55px;
+	line-height: 45px;
+}
+header .sponsors .first
+{
+	background: url(images/sponsors/first_small.png) no-repeat;
+	margin-right: 20px;
+}
+header .sponsors .gm
+{
+	background: url(images/sponsors/gm_small.jpg) no-repeat;
+}
+

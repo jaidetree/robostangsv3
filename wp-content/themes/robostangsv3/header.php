@@ -41,10 +41,12 @@
 			</<?php echo $heading_tag; ?>>
 			<div id="site-description">Northville, MI<span>FRC Team # 548</span></div>
 		</div>
-		<ul class="sponsors">
-			<li><a href="http://www.usfirst.org" class="first"></a></li>
-			<li><a href="http://www.gm.com" class="gm"></a></li>
-		</ul>
+		<div class="col-4 float-right">
+			<ul class="sponsors">
+				<li><a href="http://www.usfirst.org" class="first">FIRST</a></li>
+				<li><a href="http://www.gm.com" class="gm">General Motors</a></li>
+			</ul>
+		</div>
 	</header>
 	<nav id="access" role="navigation">
 	  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
