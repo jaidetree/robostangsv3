@@ -31,7 +31,7 @@
 			</div>
 			<br class="clearfix">
 			<div class="site-nav col-2">
-				<?php echo $links; ?>
+				<?php echo get_page_links(); ?>
 			</div>
 			<div class="site-nav col-2">
 				<?php wp_nav_menu( array( 'container_class' => 'menu-header clearfix', 'theme_location' => 'quick-links' ) ); ?>

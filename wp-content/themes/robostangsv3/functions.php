@@ -26,12 +26,24 @@ function grid_js()
 </script>
 	';
 }
+function get_page_links()
+{
+    global $page_links;
+
+	if( ! $page_links )
+	{
+	$page_links = wp_nav_menu( array( 'container_class' => 'menu-header clearfix', 'echo' => 'false', 'theme_location' => 'primary' ) ); 
+	}
+
+	echo $page_links;
+}
 register_nav_menus( array(
 		'primary' => __( 'Primary Navigation', 'twentyten' ),
 	) );      
 register_nav_menus( array(
 		'quick-links' => __( 'Quick Links', 'twentyten' ),
 	) );            
+
 
 if ( ! function_exists( 'twentyten_posted_on' ) ) :
 /**
