@@ -204,7 +204,7 @@ nav ul.menu > li:last-child a
 {
 	background: none;
 }
-nav ul.menu > li.current-menu-item, nav ul.menu > li:hover 
+nav ul.menu > li.current-menu-item /*, nav ul.menu > li:hover */ 
 {
 	background: #FE8402; /* old browsers */
 	background: -moz-linear-gradient(top, #FE8402 0%, #8A4208 100%); /* firefox */
@@ -221,13 +221,11 @@ nav ul.menu > li a
 }
 nav ul.menu > li a:hover
 {
-	-webkit-transition:text-shadow 0.5s ease-in;  
-	-moz-transition:text-shadow 0.5s ease-in;  
-	-o-transition:text-shadow 0.5s ease-in;  
-	transition:text-shadow 0.5s ease-in;        
-	text-shadow: 0px 0px 1px #ff7700;
-	filter: dropshadow(color=#ff7700, offx=0, offy=0);
-	
+	color: #ff8502;
+	-webkit-transition: color 0.5s ease-in;  
+	-moz-transition: color 0.5s ease-in;  
+	-o-transition: color 0.5s ease-in;  
+	transition: color 0.5s ease-in;        
 }
 nav ul.menu > li.current-menu-item a:hover
 {
@@ -318,7 +316,7 @@ div#main
 }
 footer .site-nav li
 {
-	margin: 12px 0;
+	margin: 13px 0;
 }
 footer .site-nav a
 {
@@ -372,6 +370,14 @@ footer .site-nav li:hover a
 #connect li
 {
 	margin: 14px 0;
+}
+#connect .facebook
+{
+	margin: 23px 0 22px;
+}
+#twitter #account
+{
+	margin-top: -10px;
 }
 footer .copyright
 {

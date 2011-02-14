@@ -25,5 +25,11 @@ function grid_js()
 	}
 </script>
 	';
-}     
+}
+register_nav_menus( array(
+		'primary' => __( 'Primary Navigation', 'twentyten' ),
+	) );      
+register_nav_menus( array(
+		'quick-links' => __( 'Quick Links', 'twentyten' ),
+	) );      
 ?>

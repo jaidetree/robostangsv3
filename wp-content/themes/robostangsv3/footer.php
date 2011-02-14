@@ -46,7 +46,7 @@
 			<div id="connect" class="col-2">
 				<ul>
 					<li><a href="mailto:team@robostangs.com">Email Us</a></li>
-					<li><a href="http://www.facebook.com/pages/Robostangs-548/116480071723806">Facebook</a></li>
+					<li class="facebook"><a href="http://www.facebook.com/pages/Robostangs-548/116480071723806">Facebook</a></li>
 					<li><a href="http://www.thebluealliance.com/team/548">Blue Alliance</a></li>
 				</ul>
 			</div>
