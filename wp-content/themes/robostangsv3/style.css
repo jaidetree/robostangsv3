@@ -12,7 +12,10 @@
 -------------------------------------------------------- */
 body
 {
-	background: #474747;
+	background: #353535;
+	position: absolute;
+	width: 100%;
+	min-height: 100%;
 }
 /* = Typography
 -------------------------------------------------------- */
@@ -29,6 +32,10 @@ a
 header a
 {
 	color: #fff;
+}
+#main
+{
+	color: #000;
 }
 /* = Utility Classes 
 -------------------------------------------------------- */
@@ -60,17 +67,23 @@ html[xmlns] .clearfix {
 * html .clearfix {
 	height: 1%;
 }
+.hide, .skip-link
+{
+	display: none;
+}
 /* = Global Elements
 -------------------------------------------------------- */
 #wrapper
 {
 	background: url(images/logomotion_header.png) no-repeat top center;
 }
+/* = Header/Banner
+-------------------------------------------------------- */
 #banner
 {
-	height: 367px;
 	display: block;
 	width: 100%;
+	margin-bottom: 100px;
 }
 #branding
 {
@@ -124,4 +137,258 @@ header .sponsors .gm
 {
 	background: url(images/sponsors/gm_small.jpg) no-repeat;
 }
-
+/* = Navigation
+-------------------------------------------------------- */  
+nav
+{
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
+	background: #858585; /* old browsers */
+	background: -moz-linear-gradient(top, #858585 0%, #505050 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#858585), color-stop(100%,#505050)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#858585', endColorstr='#505050',GradientType=0 ); /* ie */
+	border: 1px solid #111;	
+	width: 938px !important;
+}
+nav a
+{
+	color: #fff;
+	letter-spacing: 1px;
+	font-size: 0.9em;
+	line-height: 40px;
+	background: url(images/nav_divider.png) no-repeat center right;
+	height: 44px;
+	padding: 0 27px;
+	display: block;
+}
+nav .inner-wrap
+{
+	border: 1px solid #bbb;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
+	height: 44px; 
+	overflow: hidden;
+}
+nav ul.menu
+{
+}
+nav ul.menu > li
+{
+	float: left;
+}
+nav ul.menu > li:first-child
+{
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+ 	padding-left: 2px;   
+}
+nav ul.menu > li:last-child
+{
+	-webkit-border-top-right-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	padding-right: 1px;
+}
+nav ul.menu > li:last-child a
+{
+	background: none;
+}
+nav ul.menu > li.current-menu-item, nav ul.menu > li:hover 
+{
+	background: #FE8402; /* old browsers */
+	background: -moz-linear-gradient(top, #FE8402 0%, #8A4208 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FE8402), color-stop(100%,#8A4208)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FE8402', endColorstr='#8A4208',GradientType=0 ); /* ie */
+}
+nav ul.menu > li a
+{
+	color: #fff;
+	-webkit-transition:color 0.5s ease-in;  
+	-moz-transition:color 0.5s ease-in;  
+	-o-transition:color 0.5s ease-in;  
+	transition:color 0.5s ease-in;  
+}
+nav ul.menu > li a:hover
+{
+	-webkit-transition:text-shadow 0.5s ease-in;  
+	-moz-transition:text-shadow 0.5s ease-in;  
+	-o-transition:text-shadow 0.5s ease-in;  
+	transition:text-shadow 0.5s ease-in;        
+	text-shadow: 0px 0px 1px #ff7700;
+	filter: dropshadow(color=#ff7700, offx=0, offy=0);
+	
+}
+nav ul.menu > li.current-menu-item a:hover
+{
+	color: #fff;
+}
+/* = Content Area
+-------------------------------------------------------- */  
+div#main
+{
+	background: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-left: -20px;
+	margin: -10px -20px 50px -20px;
+	padding: 20px;
+	-webkit-box-shadow: 0px 0px 10px #222;
+	-moz-box-shadow: 0px 0px 10px #222;
+	box-shadow: 0px 0px 10px #222;
+	width: 960px;
+	min-height: 500px;
+}
+/* = Footer
+-------------------------------------------------------- */  
+#site-info
+{
+	display: block;
+}
+#site-info #logo
+{
+	background: url(images/footer_logo.jpg) no-repeat top center;
+	height: 173px;
+	display: block;
+	margin-bottom: 24px;
+}
+#site-info:hover #logo
+{
+	background-position: bottom center;
+}
+#site-info span
+{
+	color: #1d1d1d;
+	display: block;
+	font-weight: 600;
+	line-height: 1.3em;
+	text-shadow: 0px 1px 1px #666;
+	filter: dropshadow(color=#666,  offx=0, offy=1)
+}
+#site-info:hover span
+{
+	color: #fff;
+	text-shadow: 0px 2px 0px #000000;
+	filter: dropshadow(color=#000000, offx=0, offy=2);
+}	
+#site-info .team
+{
+	font-size: 37px;
+}
+#site-info .number
+{
+	font-size: 23px;
+}
+#site-info .location
+{
+	font-size: 20px;
+}
+.footer-box
+{
+    width: 720px;
+	font-size: 0.95em;
+}
+#footer-headers
+{
+	background: url(images/footer_border.png) repeat-x;
+	width: 100%;
+	margin-bottom: 30px;
+}
+#footer-headers h4
+{
+	line-height: 42px;
+	color: #000;
+	text-shadow: 0px 1px 1px #666;
+	filter: dropshadow(color=#666,  offx=0, offy=1);
+	font-weight: bold;
+	text-transform:uppercase;
+}
+footer .site-nav li
+{
+	margin: 12px 0;
+}
+footer .site-nav a
+{
+	color: #777;
+	line-height: 1.1em;
+	text-shadow: 0px 1px 0px #000000;
+	filter: dropshadow(color=#000000, offx=0, offy=2);
+	font-weight: 200;
+	display: block;
+}
+footer .site-nav li:hover a
+{
+	color: #ff8502;
+}
+#tweet
+{
+	margin-top: 15px;
+}
+#twitter_update_list
+{
+	background: url(images/tweet.png) no-repeat top left;
+	height: 122px;
+	padding: 10px;
+}
+.footer-button, #connect a
+{
+	background: url(images/footer_buttons.png) no-repeat;
+	display: block;
+	line-height: 44px;
+	height: 44px;
+	color: #7e7e7e;
+	text-align: center;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.8em;
+	letter-spacing: 1px;
+}
+#connect a
+{
+	background-position: -226px 0;
+}
+.footer-button:hover, #connect a:hover
+{
+	color: #5a2600;
+	background-position: 0 -50px;
+}
+#connect a:hover
+{
+	background-position: -226px -50px;
+}
+#connect li
+{
+	margin: 14px 0;
+}
+footer .copyright
+{
+	border: 2px groove #454545;
+	border-left: 0;
+	border-right: 0;
+	text-align: center;
+	font-size: 0.8em;
+	color: #666;
+	padding: 15px;
+	margin: 30px 0 10px;
+}
+footer .copyright a
+{
+	color: #666;
+}
+footer .copyright a:hover
+{
+	color: #ff8502;
+}
