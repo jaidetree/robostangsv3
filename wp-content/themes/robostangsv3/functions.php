@@ -80,7 +80,7 @@ function get_page_links()
 }
 /*}}}*/
  /*func get_files(){{{*/
-function get_files($directory, $filter = '/\.php$/')
+function get_files($directory, $callback = false, $filter = '/\.php$/')
 {
 	$dir = dir( $directory );
 	$files = array();
@@ -90,8 +90,11 @@ function get_files($directory, $filter = '/\.php$/')
 		{
 			continue;
 		}
-
-		$files[] = $directory . '/' . $file;
+        if( ! $callback )
+		{
+			$files[] = $directory . '/' . $file;
+		}
+		call_user_func( $callback, $file );
 	}
 
 	return $files;
