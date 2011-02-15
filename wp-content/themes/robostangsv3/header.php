@@ -57,4 +57,3 @@
 		</div>
 	</nav>
 	<div id="main" class="clearfix">
-		<div class="col-6">
