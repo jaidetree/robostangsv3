@@ -141,7 +141,7 @@ class SelectInput extends FormInputClass
 				$label = $value;
 			}
 
-			if( ! empty( $default_value ) && $value == $this->default_value )
+			if( ! empty( $this->default_value ) && $value == $this->default_value )
 			{
 				$selected = ' selected';
 			}

@@ -16,7 +16,7 @@
  * @subpackage MetaBoxClass
  */
 class RotatorType extends MetaBoxClass
-{
+{       
 	/**
 	 * RotatorType Class Constructor
 	 *
@@ -26,13 +26,6 @@ class RotatorType extends MetaBoxClass
 	 */
 	public function __construct()
 	{
-		$this->settings = array( 
-			'id' => 'rotator-type-box', 
-			'title' => 'Rotator Type', 
-			'name' => 'rotator_type', 
-			'post_type' => 'rotator' 
-		);
-
         $field = new SelectInput(
 			'rotator_type', #name
 			'rotator-type', #id
@@ -51,26 +44,45 @@ class RotatorType extends MetaBoxClass
 	}
 
 	/**
+	 * Update Global Settings
+	 *
+	 * This function sets the required settings for this system to function properly.
+	 * @access protected
+	 * @method
+	 */
+	protected function update_settings()
+	{
+		$this->id = 'rotator-type-box'; 
+		$this->title = 'Rotator Type'; 
+		$this->name = 'rotator_type'; 
+		$this->post_type = 'rotator';
+	}
+
+	/**
 	 * MetaBox Abstract Draw Method
 	 *
 	 * Defines the MetaBox abstract draw method. It renders the input form.
 	 * @access public
+	 * @global PostClass $post WordPress Post object
 	 * @staticvar string $html The form html to return, specifically our Rotator Post type dropdown.
 	 * @return string
 	 */
 	public function draw()
 	{
+		global $post;
 		// Use nonce for verification
-		wp_nonce_field( plugin_basename(__FILE__), 'myplugin_noncename' );
+		wp_nonce_field( plugin_basename($this->name), 'rotator_nonce' );
 
 		$field = $this->get_field( 0 );
 
-		$id = get_the_ID();
+		$id = $post->ID;
 
 		$rotator_type = get_post_meta( $id, '_rotator_type', true ); 
 
+		$field->set_default_value( $rotator_type );
+
 		// The actual fields for data entry
-		echo '<label for="' . $field->get_name() . '">' . __("Select Rotator Post Type/Format: ", $this->settings['name'] . '_textdomain' ) . '</label> ';
+		echo '<label for="' . $field->get_name() . '">' . __("Select Rotator Post Type/Format: ", $this->name . '_textdomain' ) . '</label> ';
 		echo $field;
 
 	}

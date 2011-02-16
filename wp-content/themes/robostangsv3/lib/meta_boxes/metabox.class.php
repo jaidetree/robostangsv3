@@ -30,12 +30,32 @@ abstract class MetaBoxClass
 	public abstract function draw();
 
 	/**
-	 * Our settings array that must be set from the child class.
+	 * Update Settings
+	 *
+	 * Force the child class to update required settings.
+	 * @abstract
+	 * @access protected
+	 */
+	protected abstract function update_settings();
+
+	/**#@+
+	 * Required Setting
+	 * @access protected
+	 * @var string
+	 */
+	protected $id = '';
+	protected $title = '';
+	protected $name = '';
+	protected $post_type = '';
+	/**#@-*/
+
+	/**
+	 * Our settings array that may be used by the child class.
 	 * @abstract
 	 * @var array
 	 * @access protected
 	 */
-    protected $settings = array( 'id' => '', 'title' => '', 'name' => '', 'post_type' => '' );
+    protected $settings = array( );
 
 	/**
 	 * The data fields we'll be using, they are using my InputField class.
@@ -52,6 +72,7 @@ abstract class MetaBoxClass
 	 */
 	function __construct()
 	{
+		$this->update_settings();
 		$this->_init();
 	}
 
@@ -78,10 +99,10 @@ abstract class MetaBoxClass
 	public function load()
 	{
 		add_meta_box( 
-			$this->settings['id'], 
-			__( $this->settings['title'], $this->settings['name'] . '_textdomain' ),
+			$this->id, 
+			__( $this->title, $this->name . '_textdomain' ),
 			array( $this, draw ),
-			$this->settings['post_type']
+			$this->post_type
 		);
 	}
 
@@ -120,7 +141,7 @@ abstract class MetaBoxClass
 	 */
 	function save_post_data($post_id)
 	{
-		if ( !wp_verify_nonce( $_POST['myplugin_noncename'], plugin_basename(__FILE__) )) {
+		if ( !wp_verify_nonce( $_POST['rotator_nonce'], plugin_basename($this->name) )) {
 			return $post_id;
 		}
 
@@ -132,28 +153,30 @@ abstract class MetaBoxClass
 		}		
 
 		// Check permissions
-		if ( $this->settings['post_type'] != $_POST['post_type'] ) 
+		if(  $this->settings['post_type'] != $_POST['post_type'] ) 
 		{
         	return $post_id;
 		}
 
-		if ( !current_user_can( 'edit_page', $post_id ) )
+		if( !current_user_can( 'edit_page', $post_id ) )
 		{
 			return $post_id;
 		}
 
-		if ( !current_user_can( 'edit_post', $post_id ) )
+		if( !current_user_can( 'edit_post', $post_id ) )
 		{
 			return $post_id;
 		}
 		
 		$post_data = $this->get_post_data( $_POST );
 
+
+
 		if( method_exists( $this, 'save' ) )
 		{
 			$post_data = call_user_func( array( $this, 'save' ), $post_data );
 		}
-
+		
 		foreach( $post_data as $key => $value )
 		{
 			update_post_meta( $post_id, '_' . $key, $value );
@@ -174,7 +197,7 @@ abstract class MetaBoxClass
 	{
 		$post_data = array();
 
-		foreach( $fields as $field )
+		foreach( $this->fields as $field )
 		{
 			$value = $post_array[ $field->get_name() ];
 
@@ -183,7 +206,7 @@ abstract class MetaBoxClass
 				continue;	
 			}
 
-            $post_data[] = $value;
+            $post_data[ $field->get_name() ] = $value;
 		}
 
 		return $post_data;
