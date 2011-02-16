@@ -70,8 +70,8 @@ class RotatorType extends MetaBoxClass
 		$rotator_type = get_post_meta( $id, '_rotator_type', true ); 
 
 		// The actual fields for data entry
-		echo '<label for="myplugin_new_field">' . __("Description for this field", 'myplugin_textdomain' ) . '</label> ';
-		echo $this->fields[0];
+		echo '<label for="' . $field->get_name() . '">' . __("Select Rotator Post Type/Format: ", $this->settings['name'] . '_textdomain' ) . '</label> ';
+		echo $field;
 
 	}
 }

@@ -44,6 +44,7 @@ class SelectInput extends FormInputClass
 	public function __construct( $name, $id = false, $class = false )
 	{
 		$attrs = array();
+		$attrs['name'] = $name;
 		$attrs['type'] = 'select';
 		$attrs['value'] = true;
 		$attrs['id'] = $id;

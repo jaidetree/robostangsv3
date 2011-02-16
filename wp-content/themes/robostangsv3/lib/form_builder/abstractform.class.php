@@ -153,7 +153,7 @@ abstract class FormInputClass
 	 * @access public
 	 * @return string
 	 */
-	function getName()
+	function get_name()
 	{
 		return $this->name;
 	}
@@ -171,7 +171,7 @@ abstract class FormInputClass
 	function draw( $echo = false )
 	{
 		$html = '';
-		$tag_open = '';
+		$tag_open = 'input';
 		$tag_close = '';
 		$attributes = '';
 		$value = '';
@@ -181,6 +181,7 @@ abstract class FormInputClass
 			case 'select':
 				$tag_open = 'select';
 				$value = true;
+				$tag_close = 'select';
 			break;
 			case 'textarea':
 				$tag_open = 'textarea';
@@ -189,11 +190,19 @@ abstract class FormInputClass
 			break;
 
 			default:
-				$tag_open = 'input';
-            	$attributes['type'] = $this->type;
-				$attributes['value'] = $this->value;
+				$value = '';
+				if( $this->value )
+				{
+					$attributes['value'] = $this->value;
+				}
 			break;
 		}
+
+		$attributes['type'] = $this->type;
+		$attributes['name'] = $this->name;
+		$attributes['class'] = $this->class;
+		$attributes['id'] = $this->id;
+
 
 		$html = "<{$tag_open} ";
 		$html .= $this->attr_to_str( $attributes );
@@ -260,13 +269,13 @@ abstract class FormInputClass
 	protected function attr_to_str($attributes)
 	{
 		$extra_attributes = parse_str( $this->extra_attributes );
-		$attributes = array_merge( $attributes, $extra_attributes );
+		$attributes = array_merge( $attributes, (array)$extra_attributes );
 		$this->parse_attributes( $attributes );
         $str = '';
 
 		foreach( (array)$attributes as $name => $value )
 		{
-			$str .= $name . '"' . $value . '" ';
+			$str .= $name . '="' . $value . '" ';
 		}
 
 		$str = preg_replace( "/ $/", '', $str );
