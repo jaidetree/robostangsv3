@@ -1,42 +1,109 @@
 <?php
-abstract class MetaBox
+/**
+ * Our Meta Box Abstract Class, add meta boxes to post types.
+ *
+ * The MetaBox System allows a person to create a simple subclass which just handles 
+ * it's basic drawing, and necessary save operations.
+ * @author Jay Zawrotny <jayzawrotny@gmail.com>
+ * @version 1.0
+ * @package RoboStangs2011
+ */
+/**
+ * The abstract class for our MetaBox system.
+ *
+ * MetaBox class includes methods for setting up the hooks, saving data, initialing it's self.
+ * @package RoboStangs2011
+ * @subpackage MetaBoxClass
+ * @abstract
+ */
+abstract class MetaBoxClass
 {
-	/* = Abstract Methods = */
+	/**
+	 * Abstract methods
+	 * 
+	 * Our methods that our sub clsses HAVE to define or else throw an error.
+	 * @abstract
+	 * @method boolean draw() draw the form.
+	 * @return true
+	 */
 	protected abstract function draw();
 
-	/* = Variables = */
-    protected $settings = array();
-    protected $fields = array();
-	protected $callback = null;
+	/**
+	 * Our settings array that must be set from the child class.
+	 * @abstract
+	 * @var array
+	 * @access protected
+	 */
+    protected $settings = array( 'id' => '', 'title' => '', 'name' => '', 'post_type' => '' );
 
-	/* = Constructor = */
+	/**
+	 * The data fields we'll be using, they are using my InputField class.
+	 * @var array
+	 * @access protected
+	 */
+	protected $fields = array();
+
+	/**
+	 * Class Constructor
+	 *
+	 * Just calls the _init function. This isn't even necessary but it felt right.
+	 * @access protected
+	 */
 	protected function __construct()
 	{
 		$this->_init();
 	}
 
-	/* = Parent Initiator = 
-	 * Used from the extending class's constructor */
+	/**
+	 * Internal initator function
+	 *
+	 * Sets up our two hooks: One for when the admin panel initates on WordPress admin pages.
+	 * The other for when a post is saved and calls the sub class's save function to maniuplate the data if necessary.
+	 * @access protected
+	 */
 	protected function _init()
 	{
 		add_action( 'admin_init', array( $this, 'load' ), 1 );
 		add_action( 'save_post', array( $this, 'save_post_data' ) );
 	}
 
-	/* = Load Mechanism =
-	 * The function that gets triggered on the admin init to show the meta box */
+	/**
+	 * Load the Meta Box
+	 *
+	 * Is called from WordPress's admin_init function. This is responsible for telling WordPress to draw our box
+	 * when it's drawing the admin post page for the set post type.
+	 * @access protected
+	 */
 	public function load()
 	{
 		add_meta_box( 
 			$this->settings['id'], 
 			__( $this->settings['title'], $this->settings['name'] . '_textdomain' ),
 			array( $this, draw ),
-			'rotator'
+			$this->settings['post_type']
 		);
 	}
 
-	/* = Save Function =
-	 * Proccesses data to be saved */ 
+	/**
+	 * Add Field
+	 *
+	 * Adds a field object to the fields property.
+	 * @access public
+	 * @param FormInput $field
+	 */
+	public function add_field( $field )
+	{
+		$this->fields[] = $field;
+	}
+
+	/**
+	 * Save Post Data
+	 *
+	 * Saves the post data and updates the post_meta database with the processed information
+	 * provided that it matches what the other systems have.
+	 * @access protected
+	 * @param int $post_id
+	 */
 	protected function save_post_data($post_id)
 	{
 		if ( !wp_verify_nonce( $_POST['myplugin_noncename'], plugin_basename(__FILE__) )) {
@@ -65,7 +132,14 @@ abstract class MetaBox
 		return true;
 				
 	}
-
+	/**
+	 * Get Post Data
+	 *
+	 * Takes our fields property and checks the names against what we have in our raw $_POST data.
+	 * This extracts only the data that we've assigned the meta box to use.
+	 * @access protected
+	 * @param array $post_array
+	 */
 	protected function get_post_data($post_array)
 	{
 		$post_data = array();
