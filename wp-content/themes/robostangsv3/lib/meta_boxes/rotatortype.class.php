@@ -33,6 +33,22 @@ class RotatorType extends MetaBoxClass
 			'post_type' => 'rotator' 
 		);
 
+        $field = new FormInput(
+			'select', #type
+			'rotator_type', #name
+			'rotator-type', #id
+			'',             #value
+			'rotator-type-input' #class
+		);
+
+		$field->add_option( 'image', 'Image' );
+		$field->add_option( 'post', 'Post' );
+		$field->add_option( 'link', 'Link' );
+		$field->add_option( 'video', 'Video' );
+		$field->add_option( 'youtube', 'Youtube Video' );
+
+		$this->add_field( $field ) ;
+
 		parent::__construct();
 	}
 
@@ -48,6 +64,12 @@ class RotatorType extends MetaBoxClass
 	{
 		// Use nonce for verification
 		wp_nonce_field( plugin_basename(__FILE__), 'myplugin_noncename' );
+
+		$field = $this->get_field( 0 );
+
+		$id = get_the_ID();
+
+		$rotator_type = get_post_meta( $id, '_rotator_type', true ); 
 
 		// The actual fields for data entry
 		echo '<label for="myplugin_new_field">' . __("Description for this field", 'myplugin_textdomain' ) . '</label> ';

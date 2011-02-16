@@ -98,6 +98,19 @@ abstract class MetaBoxClass
 	}
 
 	/**
+	 * Get Field
+	 *
+	 * Get's a field item by index number.
+	 * @access protected
+	 * @param int $field_index
+	 * @return FormInput 
+	 */
+	protected function get_field( $field_index )
+	{
+		return $this->fields[ $field_index ];
+	}
+
+	/**
 	 * Save Post Data
 	 *
 	 * Saves the post data and updates the post_meta database with the processed information

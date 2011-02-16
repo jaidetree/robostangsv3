@@ -1,11 +1,13 @@
 <?php
-abstract class FormInput
+abstract class FormInputClass
 {
+	abstract protected function parse_attributes();
+	abstract protected function parse_value();
+
 	protected var $type = '';
 	protected var $name = '';
 	protected var $id = '';
 	protected var $value = '';
-	protected var $options = array();
     protected var $extra_attributes = '';
 	protected var $class = '';
 
@@ -19,12 +21,6 @@ abstract class FormInput
 		$this->extra_attributes = (string)$extra_attributes;
 	}
 
-	function add_option( $value, $label = false )
-	{
-		$label = ( $label ) ? $label : false;
-		$this->options[] = array( $value, $label );
-	}
-
 	function add_attribute($name, $value)
 	{
 		$this->extra_attributes[ $name ] = $value;
@@ -35,7 +31,7 @@ abstract class FormInput
 		return $this->draw();
 	}
 
-	function get_name()
+	function getName()
 	{
 		return $this->name;
 	}
@@ -52,7 +48,7 @@ abstract class FormInput
 		{
 			case 'select':
 				$tag_open = 'select';
-				$value = $this->options_to_str();
+				$value = true;
 			break;
 			case 'textarea':
 				$tag_open = 'textarea';
@@ -73,7 +69,7 @@ abstract class FormInput
 
 		if( $value )
 		{
-			$html .= $value;
+			$html .= $this->parse_value($value);
 		}
 
 		if( $tag_close )
@@ -90,29 +86,19 @@ abstract class FormInput
 
 
 	}
-	protected function options_to_str()
+	protected function parse_value( $value )
 	{
-		$html = '';
-
-		foreach( $this->options as $option)
-		{
-			$value = $option[0];
-			$label = $option[1];
-
-			if( !$label )
-			{
-				$label = $value;
-			}
-
-			$html .= "\t<option value=\"{$value}\">{$label}</option>\n";
-		}
-
-		return $html;
+		return $value
+	}
+	protected function parse_attributes( $attributes )
+	{
+		return $attributes
 	}
 	protected function attr_to_str($attributes)
 	{
 		$extra_attributes = parse_str( $this->extra_attributes );
 		$attributes = array_merge( $attributes, $extra_attributes );
+		$this->parse_attributes( $attributes );
         $str = '';
 
 		foreach( (array)$attributes as $name => $value )
