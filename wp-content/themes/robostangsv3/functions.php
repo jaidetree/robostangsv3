@@ -25,6 +25,7 @@ function theme_init()
 
 	if( is_admin() )
 	{
+		 get_files( THEME_LIB_DIR . 'form_builder', 'load_library' ); 
 		get_files( THEME_LIB_DIR . 'meta_boxes', 'load_library' );
 	}
 
