@@ -330,6 +330,10 @@ abstract class HTML
 		$this->set_attribute( 'id' );
 		$this->set_attribute( 'class' );
 		$this->set_attribute( 'style' );
+		$this->set_attribute( 'lang' );
+		$this->set_attribute( 'dir' );
+		$this->set_attribute( 'title' );
+		$this->set_attribute( 'xml:lang' );
 	}
 
 }

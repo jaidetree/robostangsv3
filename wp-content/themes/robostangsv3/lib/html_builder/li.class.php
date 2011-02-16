@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * An HTML Abstraction Class
  *
@@ -14,8 +14,8 @@
  * Creates the single HTML element and allowed attributes if neccesary.
  * @package RoboStangs2011
  * @subpackage HTMLClass
- */   
-class ul extends HTML
+ */    
+class li extends HTML
 {
 	protected function set_open_tag()
 	{
@@ -34,6 +34,7 @@ class ul extends HTML
 			'indent_level' => $indent_level,
 			'content' => $content,
 		) );
+
 	}
 }
 ?>
