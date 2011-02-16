@@ -25,12 +25,17 @@ abstract class FormInput
 		$this->options[] = array( $value, $label );
 	}
 
+	function add_attribute($name, $value)
+	{
+		$this->extra_attributes[ $name ] = $value;
+	}
+
 	function __toString()
 	{
 		return $this->draw();
 	}
 
-	function getName()
+	function get_name()
 	{
 		return $this->name;
 	}

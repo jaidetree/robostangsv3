@@ -72,7 +72,7 @@ abstract class MetaBox
 
 		foreach( $fields as $field )
 		{
-			$value = $post_array[ $field->getName() ];
+			$value = $post_array[ $field->get_name() ];
 
         	if( ! $value  )
 			{
