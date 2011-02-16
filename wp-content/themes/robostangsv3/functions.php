@@ -23,10 +23,23 @@ function theme_init()
 	global $loaded_extensions;
 	add_theme_support( 'post-thumbnails' );
 
+	get_files( THEME_LIB_DIR . 'html_builder', 'load_library' );
+
 	if( is_admin() )
 	{
-		 get_files( THEME_LIB_DIR . 'form_builder', 'load_library' ); 
+		get_files( THEME_LIB_DIR . 'form_builder', 'load_library' ); 
 		get_files( THEME_LIB_DIR . 'meta_boxes', 'load_library' );
+	}
+
+	$uri = explode( '/', $_SERVER['REQUEST_URI'] );
+
+	list( $application, $page, $action ) = $uri;
+	
+	switch( $application )
+	{
+	default:
+		load_library( THEME_LIB_DIR . 'modules/rotator.php' );
+		break;
 	}
 
 	/* Register Nav Menus  *//*{{{*/
