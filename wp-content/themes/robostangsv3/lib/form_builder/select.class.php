@@ -31,6 +31,26 @@ class SelectInput extends FormInputClass
 	protected $options = array();
 
 	/**
+	 * SelectInput Constructor
+	 *
+	 * Sets the basic html input element's attributes
+	 * @method
+	 * @access public
+	 * @param string $name The HTML name attribute
+	 * @param string $id Optional: The HTML id attribute
+	 * @param string $class Optional: The HTML class attribute
+	 * @param string $extra_attributes Optional: A key=value&key2=value2 string of extra HTML attributes
+	 */
+	public function __construct( $name, $id = false, $class = false )
+	{
+		$this->type = 'select';
+		$this->value = true;
+		$this->id = $id;
+		$this->class = $class;
+		$this->extra_attributes = $extra_attributes;
+	}
+
+	/**
 	 * Parse the select tag's HTML attributes.
 	 *
 	 * Defines our abstract parse_attribtues function and allows us to
@@ -77,7 +97,6 @@ class SelectInput extends FormInputClass
 		$this->options[] = array( $value, $label );
 	}
 
-
 	/**
 	 * Set a default value option
 	 * 
@@ -89,7 +108,6 @@ class SelectInput extends FormInputClass
 	 * @return boolean true
 	 * @todo add default by label or index options
 	 */
-
 	public function set_default_value( $value )
 	{
        	$this->default_value = $value;

@@ -28,21 +28,19 @@ abstract class FormInputClass
 	 * The abstract parse_attributes class
 	 * @abstract
 	 * @method 
-	 * @access protected
+	 * @access public
 	 * @param  array $attributes Is also the return value, generally.
 	 * @return array
 	 */
-	abstract protected function parse_attributes($attributes);
 
 	/**
 	 * The abstract parse_value class
 	 * @abstract
 	 * @method 
-	 * @access protected
+	 * @access public
 	 * @param  string $value May also just be returned.
 	 * @return string
 	 */
-	abstract protected function parse_value($value);
 
 	/*
 	 * Variables
@@ -54,7 +52,7 @@ abstract class FormInputClass
 	 * @access protected
 	 * @var string
 	 */
-	protected var $type = '';
+	protected $type = '';
 	/**
 	 * The input name attribute
 	 * @access protected
@@ -84,7 +82,7 @@ abstract class FormInputClass
 	 * @access protected
 	 * @var string
 	 */
-	protected var $class = '';
+	protected $class = '';
 	
 	/**
 	 * FormInput Constructor
@@ -154,6 +152,7 @@ abstract class FormInputClass
 	 * @param bool $echo Optional: Default: false; Determines whether to echo the 
 	 * rendered HTML immediately
 	 * @return string
+	 * @todo Come up with a way to allow classes to expand on this.
 	 */
 	function draw( $echo = false )
 	{
@@ -218,7 +217,7 @@ abstract class FormInputClass
 	 */
 	protected function parse_value( $value )
 	{
-		return $value
+		return $value;
 	}
 	/**
 	 * Abstract method attributes placeholder
@@ -233,7 +232,7 @@ abstract class FormInputClass
 	 */
 	protected function parse_attributes( $attributes )
 	{
-		return $attributes
+		return $attributes;
 	}
 	/**
 	 * Converts our attributes to strings
@@ -260,4 +259,5 @@ abstract class FormInputClass
 
 		return $str;
 	}
+}
 ?>

@@ -33,11 +33,9 @@ class RotatorType extends MetaBoxClass
 			'post_type' => 'rotator' 
 		);
 
-        $field = new FormInput(
-			'select', #type
+        $field = new SelectInput(
 			'rotator_type', #name
 			'rotator-type', #id
-			'',             #value
 			'rotator-type-input' #class
 		);
 
@@ -73,7 +71,7 @@ class RotatorType extends MetaBoxClass
 
 		// The actual fields for data entry
 		echo '<label for="myplugin_new_field">' . __("Description for this field", 'myplugin_textdomain' ) . '</label> ';
-		echo '<input type="text" id= "myplugin_new_field" name="myplugin_new_field" value="whatever" size="25" />';
+		echo $this->fields[0];
 
 	}
 }
