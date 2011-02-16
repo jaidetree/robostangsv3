@@ -25,8 +25,9 @@ abstract class MetaBoxClass
 	 * @abstract
 	 * @method boolean draw() draw the form.
 	 * @return true
+	 * @access public
 	 */
-	protected abstract function draw();
+	public abstract function draw();
 
 	/**
 	 * Our settings array that must be set from the child class.
@@ -47,9 +48,9 @@ abstract class MetaBoxClass
 	 * Class Constructor
 	 *
 	 * Just calls the _init function. This isn't even necessary but it felt right.
-	 * @access protected
+	 * @access public
 	 */
-	protected function __construct()
+	function __construct()
 	{
 		$this->_init();
 	}
@@ -104,7 +105,7 @@ abstract class MetaBoxClass
 	 * @access protected
 	 * @param int $post_id
 	 */
-	protected function save_post_data($post_id)
+	function save_post_data($post_id)
 	{
 		if ( !wp_verify_nonce( $_POST['myplugin_noncename'], plugin_basename(__FILE__) )) {
 			return $post_id;
@@ -117,6 +118,22 @@ abstract class MetaBoxClass
 			return $post_id;
 		}		
 
+		// Check permissions
+		if ( $this->settings['post_type'] != $_POST['post_type'] ) 
+		{
+        	return $post_id;
+		}
+
+		if ( !current_user_can( 'edit_page', $post_id ) )
+		{
+			return $post_id;
+		}
+
+		if ( !current_user_can( 'edit_post', $post_id ) )
+		{
+			return $post_id;
+		}
+		
 		$post_data = $this->get_post_data( $_POST );
 
 		if( method_exists( $this, 'save' ) )

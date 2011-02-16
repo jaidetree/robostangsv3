@@ -8,7 +8,7 @@ define( 'THEME_LIB_DIR', dirname(__FILE__) . '/lib/' );
 
 /* =Variables                     
 --------------------------------------------- */
-$loaded_libraries = array();
+$loaded_extensions = array();
 
 /* =Actions
 --------------------------------------------- */
@@ -20,11 +20,12 @@ add_action( 'init', 'theme_init' );
 /* func theme_init  *//*{{{*/
 function theme_init()
 {
+	global $loaded_extensions;
 	add_theme_support( 'post-thumbnails' );
 
 	if( is_admin() )
 	{
-		get_files( THEME_LIB_DIR . 'meta_boxes' );
+		get_files( THEME_LIB_DIR . 'meta_boxes', 'load_library' );
 	}
 
 	/* Register Nav Menus  *//*{{{*/
@@ -85,30 +86,32 @@ function get_files($directory, $callback = false, $filter = '/\.php$/')
 	$dir = dir( $directory );
 	$files = array();
 	while( ( $file = $dir->read() ) !== false )
-	{
+	{	
 		if( ! preg_match( "$filter", $file ) )
 		{
 			continue;
 		}
         if( ! $callback )
 		{
-			$files[] = $directory . '/' . $file;
+			$files[] = $directory . "/" . $file;
 		}
-		call_user_func( $callback, $file );
+		call_user_func( $callback, $directory . "/" . $file );
 	}
-
-	return $files;
+    if( ! $callback )
+	{
+		return $files;
+	}
 }/*}}}*/
 /*func load_library{{{*/
 function load_library($library_file)
 {
-	global $loaded_libraries;
+	global $loaded_extensions;
 	if( ! file_exists( $library_file ) )
 	{
 		return false;
 	}
+	$loaded_extensions[] = $library_file;
     include $library_file;
-	$loaded_libraries[] = $library_file;
 }/*}}}*/
 
 /* =Twentyten Functions
