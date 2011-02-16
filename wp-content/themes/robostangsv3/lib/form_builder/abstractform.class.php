@@ -90,20 +90,34 @@ abstract class FormInputClass
 	 * Initiates the FormInput class. Sets the necessary attributes.
 	 * @method
 	 * @access public
-	 * @param string $type The type of <input type> attribute, textarea, or select.
+	 * @param string|array $type The type of <input type> attribute, textarea, or select. Or the array
+	 * of attributes to use instead.
 	 * @param string $name The name attribute
 	 * @param string $value Optional: Either the value attribute or tag HTML content.
 	 * @param string $class Optional: The classname
 	 * @param string $extra_attributes Optional: A string of optional attributes in key=value&key2=value2 form.
 	 */
-	function __construct( $type, $name, $id, $value = '', $class = '', $extra_attributes = '' )
+	function __construct( $type, $name = '', $id = '', $value = '', $class = '', $extra_attributes = '' )
 	{
-		$this->type = (string)$type;
-		$this->name = (string)$name;
-		$this->id = (string)$id;
-		$this->value = $value;
-		$this->class = (string)$class;
-		$this->extra_attributes = (string)$extra_attributes;
+		if( ! is_array( $type ) )
+		{
+			$this->type = (string)$type;
+			$this->name = (string)$name;
+			$this->id = (string)$id;
+			$this->value = $value;
+			$this->class = (string)$class;
+			$this->extra_attributes = (string)$extra_attributes;
+		}
+		else
+		{
+			$this->type = (string)$type['type'];
+			$this->name = (string)$type['name'];
+			$this->id = (string)$type['id'];
+			$this->value = $type['value'];
+			$this->class = (string)$type['class'];
+			$this->extra_attributes = (string)$type['extra_attributes'];
+		}
+
 	}
 
 	/**

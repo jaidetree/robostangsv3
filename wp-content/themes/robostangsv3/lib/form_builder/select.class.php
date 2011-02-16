@@ -43,11 +43,14 @@ class SelectInput extends FormInputClass
 	 */
 	public function __construct( $name, $id = false, $class = false )
 	{
-		$this->type = 'select';
-		$this->value = true;
-		$this->id = $id;
-		$this->class = $class;
-		$this->extra_attributes = $extra_attributes;
+		$attrs = array();
+		$attrs['type'] = 'select';
+		$attrs['value'] = true;
+		$attrs['id'] = $id;
+		$attrs['class'] = $class;
+		$attr['extra_attributes'] = $extra_attributes;
+
+		parent::__construct( $attrs );
 	}
 
 	/**
