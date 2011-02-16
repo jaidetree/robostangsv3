@@ -20,5 +20,10 @@
  */
 class RoboRotator
 {
+	public static function start()
+	{
+	   $ul = new ul("<li>Hello</li>","\n"); 
+	   echo $ul;
+	}
 }
 ?>

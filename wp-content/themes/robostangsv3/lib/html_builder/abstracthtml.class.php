@@ -197,7 +197,7 @@ abstract class HTML
 	 */
 	protected function get_attribute( $name )
 	{
-		if( ! array_key_exists( $name, $this->_attributes )
+		if( ! array_key_exists( $name, $this->_attributes ) )
         {
 			return false;
 		}
@@ -242,7 +242,7 @@ abstract class HTML
 	 */
 	private function _set_open_tag()
 	{
-		if( !is_callable( array( $this, 'set_open_tag' ) )
+		if( !is_callable( array( $this, 'set_open_tag' ) ) )
         {
 			return false;
 		}
@@ -259,7 +259,7 @@ abstract class HTML
 	 */
 	private function _set_close_tag()
 	{
-		if( !is_callable( array( $this, 'set_close_tag' ) )
+		if( !is_callable( array( $this, 'set_close_tag' ) ) )
         {
 			return false;
 		}
@@ -316,12 +316,14 @@ abstract class HTML
 	{
 		if( is_array( $atts ) )
 		{
-			foreach( $atts as $attribute )
+			foreach( $atts as $name=>$value )
 			{
-				if( ! isset( $this->$attribute ) )
+				if( ! isset( $this->$name ) || ! $value )
 				{
 					continue;
 				}
+
+				$this->$name = $value;
 			}
 		}
 
