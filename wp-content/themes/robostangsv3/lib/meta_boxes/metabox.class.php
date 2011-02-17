@@ -141,7 +141,8 @@ abstract class MetaBoxClass
 	 */
 	function save_post_data($post_id)
 	{
-		if ( !wp_verify_nonce( $_POST['rotator_nonce'], plugin_basename($this->name) )) {
+		if ( !wp_verify_nonce( $_POST['rotator_nonce'], plugin_basename($this->name) )) 
+		{
 			return $post_id;
 		}
 
@@ -153,7 +154,7 @@ abstract class MetaBoxClass
 		}		
 
 		// Check permissions
-		if(  $this->settings['post_type'] != $_POST['post_type'] ) 
+		if(  $this->post_type != $_POST['post_type'] ) 
 		{
         	return $post_id;
 		}
@@ -169,8 +170,6 @@ abstract class MetaBoxClass
 		}
 		
 		$post_data = $this->get_post_data( $_POST );
-
-
 
 		if( method_exists( $this, 'save' ) )
 		{

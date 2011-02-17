@@ -38,19 +38,19 @@ class RoboRotator
 	
 	public static function build_ui()
 	{
-		$div = new div(); 
-		$div->class = 'rotator-frame';
-		$div2 = new div();
-		$div2->id = 'rotator-ui';
 
+		$div = new div();
 		$ul = new ul();
+		$div->id = 'rotator-ui';
+		$ul->class = 'clearfix';
 
 		for( $i = 0; $i < self::$total_posts; $i++ )
 		{
 			$ul->insert( self::build_ui_control() );
 	  	}
 
-		$div->insert( &$div2 )->insert( $ul )->class = 'clearfix';
+
+		$div->insert( $ul );
 
 		echo $div;
 	}	
@@ -140,6 +140,9 @@ class RoboRotator
 			case 'post':
 				self::$slides[] = new RoboRotatorPostSlide($post_id);
 				break;
+			case 'youtube':
+				self::$slides[] = new RoboRotatorYoutubeSlide($post_id);
+				break;
 		}
 	}
 }
@@ -197,6 +200,13 @@ class RoboRotatorSlide
 
 		return $p;
 	}
+	public function add_title()
+	{
+		$h2 = new h2();
+		$h2->insert( get_the_title() );
+
+		return $h2;
+	}
 }
 class RoboRotatorLinkSlide extends RoboRotatorSlide
 {
@@ -236,13 +246,46 @@ class RoboRotatorPostSlide extends RoboRotatorSlide
 		$style = sprintf( "background: url(%s) no-repeat;width: %dpx;height: %dpx;", $image_data[0], $image_data[1], $image_data[2] );
 		$div = new div();
 		$div->style = $style;
+		$div->insert( $this->add_title() );
 		$this->li->insert( &$a )->insert( &$div )->insert( $this->add_paragraph() );
 	}	
 
 	private function set_link( $a )
 	{
-	   $link = get_post_meta( $post_id, 'url-link', true );
+	   $post_id = get_post_meta( $this->post_id, 'post-id', true );
+	   $link = get_permalink( $post_id );
 	   $a->href = $link;
+	}
+
+}
+/**
+ * Rotator Youtube Slide Class
+ *
+ * @todo Description
+ */
+class RoboRotatorYoutubeSlide extends RoboRotatorSlide
+{
+	public function __construct($post_id)
+	{
+		$this->init($post_id);
+		$video_id = $this->get_video_id();
+
+		$iframe = new iframe();
+		$iframe->title = 'Youtube Video Player';
+		$iframe->width = 597;
+		$iframe->height = 300;
+		$iframe->src = "http://www.youtube.com/embed/{$video_id}?wmode=transparent";
+		$iframe->frameborder = 0;
+		$iframe->allowfullscreen = true;
+
+		$this->li->class .= ' youtube-slide';
+		$this->li->insert( &$iframe );
+	}	
+
+
+	public function get_video_id()
+	{
+		return get_post_meta( $this->post_id, 'youtube', true );
 	}
 }
 

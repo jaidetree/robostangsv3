@@ -18,6 +18,10 @@
  *
  * @package RoboStangs2011
  * @subpackage HTMLClass
+ * @todo make the attribute settings chainable
+ * @todo make a function to transverse the content array
+ * @todo make the class atribute an array
+ * @todo make a add, has, and remove functions for the class attribute array
  */   
 abstract class HTML
 {
@@ -35,15 +39,21 @@ abstract class HTML
 	 */
 	abstract protected function set_close_tag();
 
+	/**
+	 * @access protected
+	 * @var array
+	 */
+	protected $content = array();
+
 	/**#@+
 	 * @access protected
 	 * @var string
 	 */
-	protected $content = '';
 	protected $before_tag = '';
 	protected $open_tag = 'html';
 	protected $close_tag = 'html';
 	protected $after_tag = '';
+	protected $tag_padding = '';
 	/**#@-*/
 
 	/**
@@ -163,6 +173,27 @@ abstract class HTML
 	}
 
 	/**
+	 * Insert into HTML Element's content
+	 *
+	 * Add the HTML element to the content and return the handle of the object
+	 * as a reference to allow chaining.
+	 * @access public
+	 * @param mixed $element Something to add to the contents.
+	 * @return HTMLSubClass
+	 */
+	public function insert( $element )
+	{
+		$this->content[] = $element;
+
+		if( is_object( $element ) && get_parent_class( $element ) == get_parent_class( $this ) )
+		{
+			return $element;
+		}else{
+			return $this;
+		}
+	}
+
+	/**
 	 * Set HTML Attribute
 	 *
 	 * Sub-classes should use this function to set available attributes.
@@ -216,17 +247,17 @@ abstract class HTML
 		$str = '';
 		foreach( $this->_attributes as $name => $value )
 		{
-			if( ! $name or ! $value )
+			if( ! $name or ( empty( $value ) && ! is_numeric( $value ) ) )
 			{
 				continue;
 			}
 
 			if( is_bool( $value ) )
 			{
-				$value = ( $value ) ? 'true' : 'false';
+				$str .= ' ' . $name; 	
+			}else{
+				$str .= ' ' . $name . '="' . $value . '"'; 	
 			}
-
-			$str .= ' ' . $name . '="' . $value . '"'; 	
 		}
 
 		return $str;
@@ -286,10 +317,20 @@ abstract class HTML
 		$html = $this->before_tag;
 
 		$html .= '<' . $this->open_tag . $this->_attributes_to_string() . '>';
-
+		
+		if( $this->tag_padding )
+		{
+			$html .= $this->tag_padding;
+		}
+		
 		if( $this->content )
 		{
-			$html .= $this->content;
+			$html .= implode( '', $this->content );
+		}
+		
+		if( $this->tag_padding )
+		{
+			$html .= $this->tag_padding;
 		}
 
 		if( $this->close_tag )
@@ -320,6 +361,11 @@ abstract class HTML
 			{
 				if( ! isset( $this->$name ) || ! $value )
 				{
+					continue;
+				}
+				if( $name == 'content' && ! is_array( $value )  )
+				{
+					$this->content[] = $value;
 					continue;
 				}
 

@@ -400,7 +400,8 @@ footer .copyright a:hover
 }
 #rotator
 {
-	height: 341px;
+	height: 342px;
 	background: #ccc;
 	position: relative;
+	background: url(images/rotator_frame.png) no-repeat;
 }

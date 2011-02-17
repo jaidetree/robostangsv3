@@ -2,14 +2,40 @@
 {
 	margin-top: 11px;
 }
-#rotator-slides .link-slide a
+#rotator-slides .slide
+{
+	margin-bottom: 20px;
+	margin-left: 11px;
+	width: 597px;
+	height: 321px;
+	overflow: hidden;
+}
+#rotator-slides a
 {
 	display: block
-	height: 344px;
+	height: 100%;
 }
 #rotator-slides .post-slide div
 {
 	position: relative;
+	-webkit-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.6);
+	-moz-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.6);
+	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.6);
+}
+#rotator-slides .post-slide h2
+{
+	padding: 10px 20px;
+	background: rgba(0,0,0,0.4 );
+	display: block;
+	position: absolute;
+	top: -80%;
+	width: 100%;
+	-webkit-transition: top 0.5s ease-out;
+	-moz-transition: top 0.5s ease-out;
+	-o-transition: top 0.5s ease-out;
+	transition: top 0.5s ease-out;
+	color: #fff;
+	font-size: 2em;
 }
 #rotator-slides .post-slide p
 {
@@ -17,7 +43,33 @@
 	background: rgba(0,0,0,0.4 );
 	display: block;
 	position: absolute;
-	bottom: 0;
+	bottom: -80%;
+	-webkit-transition: bottom 0.5s ease-out;
+	-moz-transition: bottom 0.5s ease-out;
+	-o-transition: bottom 0.5s ease-out;
+	transition: bottom 0.5s ease-out;
+}
+#rotator-slides .post-slide:hover p 
+{
+	bottom: 0px;
+	-webkit-transition: bottom 0.5s ease-out;
+	-moz-transition: bottom 0.5s ease-out;
+	-o-transition: bottom 0.5s ease-out;
+	transition: bottom 0.5s ease-out;
+}
+#rotator-slides .post-slide:hover h2 
+{
+	top: 0px;
+	-webkit-transition: top 0.5s ease-out;
+	-moz-transition: top 0.5s ease-out;
+	-o-transition: top 0.5s ease-out;
+	transition: top 0.5s ease-out;
+}
+#rotator-slides .youtube-slide iframe
+{
+	z-index: 1 !important;
+	position: absolute !important;
+	display: block;
 }
 .rotator-frame
 {
@@ -30,30 +82,31 @@
 #rotator-ui
 {
 	position: absolute;
-	bottom: 10px;
-	margin: 0 auto;
+	bottom: -14px;
 	width: 100%;
+	z-index: 10000;
 }
 #rotator-ui ul
 {
-	width: 131px;
+	background: url(../images/rotator-ui.png) no-repeat;
+	width: 163px;
+	height: 51px;
 	margin: 0 auto;
 	display: block;
 	font-size: 40px;
-	line-height: 31px;
+	line-height: 50px;
 }
 #rotator-ui li
 {
 	float: left;
-	margin: 0 2px;
 }
 #rotator-ui li:first-child
 {
-	margin-left: 4px;
+	margin-left: 20px;
 }
 #rotator-ui li:last-child
 {
-	margin-right: 4px;
+	margin-right: 20px;
 }
 #rotator-ui li a
 {

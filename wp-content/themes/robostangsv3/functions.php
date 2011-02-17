@@ -4,6 +4,7 @@
 --------------------------------------------- */
 define( 'THEME_DIR', preg_replace( "#^.*/wp-content/#", '/wp-content/', dirname(__FILE__) ) );
 define( 'THEME_LIB_DIR', dirname(__FILE__) . '/lib/' );
+define( 'THEME_PATH', dirname(__FILE__) . '/' );
 
 
 /* =Variables                     
@@ -16,12 +17,12 @@ add_action( 'wp_footer', 'grid_overlay' );
 add_action( 'wp_head', 'grid_js' );
 add_action( 'init', 'theme_init' );
 
+add_theme_support( 'post-thumbnails' );
 
 /* func theme_init  *//*{{{*/
 function theme_init()
 {
 	global $loaded_extensions;
-	add_theme_support( 'post-thumbnails' );
 
 	get_files( THEME_LIB_DIR . 'html_builder', 'load_library' );
 

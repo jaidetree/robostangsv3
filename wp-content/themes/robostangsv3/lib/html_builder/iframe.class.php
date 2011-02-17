@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * An HTML Abstraction Class
  *
@@ -14,8 +14,8 @@
  * Creates the single HTML element and allowed attributes if neccesary.
  * @package RoboStangs2011
  * @subpackage HTMLClass
- */   
-class ul extends HTML
+ */    
+class iframe extends HTML
 {
 	protected function set_open_tag()
 	{
@@ -31,10 +31,22 @@ class ul extends HTML
 		parent::__construct( array(
 			'after_html' => $after_html, 
 			'before_html' => $before_html,
-			'indent_level' => $indent_level,
+			'indent_level' => (int)$indent_level,
 			'content' => $content,
-			'tag_padding' => "\n",
 		) );
+
+		$this->set_attribute( 'frameborder' );
+		$this->set_attribute( 'height' );
+		$this->set_attribute( 'longdesc' );
+		$this->set_attribute( 'marginheight' );
+		$this->set_attribute( 'marginwidth' );
+		$this->set_attribute( 'name' );
+		$this->set_attribute( 'scrolling' );
+		$this->set_attribute( 'src' );
+		$this->set_attribute( 'width' );
+		$this->set_attribute( 'allowfullscreen' );
+
 	}
 }
 ?>
+

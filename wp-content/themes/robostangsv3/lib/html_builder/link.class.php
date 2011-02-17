@@ -15,7 +15,7 @@
  * @package RoboStangs2011
  * @subpackage HTMLClass
  */   
-class ul extends HTML
+class link extends HTML
 {
 	protected function set_open_tag()
 	{
@@ -23,18 +23,26 @@ class ul extends HTML
 	}
 	protected function set_close_tag()
 	{
-		$this->close_tag = get_class( $this );
+		$this->close_tag = '';
 	}
 
-	public function __construct($content = '', $indent_level = 0, $after_html = '', $before_html = '' )
+	public function __construct( $before_tag='', $indent_level = '' )
 	{
 		parent::__construct( array(
-			'after_html' => $after_html, 
-			'before_html' => $before_html,
-			'indent_level' => $indent_level,
-			'content' => $content,
-			'tag_padding' => "\n",
+			'after_tag' => "\n", 
+			'before_tag' => $before_tag,
+			'indent_level' => (int)$indent_level,
 		) );
+
+		$this->set_attribute( 'charset' );
+		$this->set_attribute( 'href' );
+		$this->set_attribute( 'hreflang' );
+		$this->set_attribute( 'media' );
+		$this->set_attribute( 'rel' );
+		$this->set_attribute( 'rev' );
+		$this->set_attribute( 'target' );
+		$this->set_attribute( 'type' );
+		
 	}
 }
 ?>

@@ -26,12 +26,12 @@ class li extends HTML
 		$this->close_tag = get_class( $this );
 	}
 
-	public function __construct($content = '', $after_html = '', $before_html = '', $indent_level = '')
+	public function __construct($content = '', $indent_level = 0, $after_html = '', $before_html = '' )
 	{
 		parent::__construct( array(
 			'after_html' => $after_html, 
 			'before_html' => $before_html,
-			'indent_level' => $indent_level,
+			'indent_level' => (int)$indent_level,
 			'content' => $content,
 		) );
 
