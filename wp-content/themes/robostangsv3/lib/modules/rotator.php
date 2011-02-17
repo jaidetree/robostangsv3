@@ -143,6 +143,9 @@ class RoboRotator
 			case 'youtube':
 				self::$slides[] = new RoboRotatorYoutubeSlide($post_id);
 				break;
+			case 'image':
+				self::$slides[] = new RoboRotatorImageSlide($post_id);
+				break;
 		}
 	}
 }
@@ -287,6 +290,20 @@ class RoboRotatorYoutubeSlide extends RoboRotatorSlide
 	{
 		return get_post_meta( $this->post_id, 'youtube', true );
 	}
+}
+
+/**
+ * Rotator Image Slide Class
+ */
+class RoboRotatorImageSlide extends RoboRotatorSlide
+{
+
+	public function __construct($post_id)
+	{
+		$this->init($post_id);
+		$this->li->class .= ' image-slide';
+		$this->li->insert( $this->get_image() );
+	}	
 }
 
 ?>

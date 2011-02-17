@@ -35,7 +35,7 @@ class RotatorType extends MetaBoxClass
 		$field->add_option( 'image', 'Image' );
 		$field->add_option( 'post', 'Post' );
 		$field->add_option( 'link', 'Link' );
-		$field->add_option( 'video', 'Video' );
+		//$field->add_option( 'video', 'Video' );
 		$field->add_option( 'youtube', 'Youtube Video' );
 
 		$this->add_field( $field ) ;
