@@ -20,10 +20,230 @@
  */
 class RoboRotator
 {
-	public static function start()
+	public static $width, $height;
+	public static $slides = array();
+	public static $setup = false;
+	public static $total_posts = 0;
+    public static $ui_counter = 0;
+	public static $total_slides = 0;
+
+	public static function insert($total_slides, $width, $height)
 	{
-	   $ul = new ul("<li>Hello</li>","\n"); 
-	   echo $ul;
+		self::$width = $width;
+		self::$height = $height;
+		self::get_posts();
+		self::build_slides();
+		self::build_ui();
+	}
+	
+	public static function build_ui()
+	{
+		$div = new div(); 
+		$div->class = 'rotator-frame';
+		$div2 = new div();
+		$div2->id = 'rotator-ui';
+
+		$ul = new ul();
+
+		for( $i = 0; $i < self::$total_posts; $i++ )
+		{
+			$ul->insert( self::build_ui_control() );
+	  	}
+
+		$div->insert( &$div2 )->insert( $ul )->class = 'clearfix';
+
+		echo $div;
+	}	
+
+	public static function build_ui_control()
+	{
+		$li = new li();
+		$a = new a();
+		$a->href = '#';
+		$a->rel = self::$ui_counter;
+		
+		if( self::$ui_counter == 0 )
+		{
+			$a->class = 'selected';
+		}
+	
+		$li->insert( &$a )->insert( '&bull;' );
+		self::$ui_counter = self::$ui_counter + 1;
+
+		return $li;
+	}
+
+	public static function build_slides()
+	{
+		$ul = new ul();
+		$ul->id = "rotator-slides";
+
+		foreach( self::$slides as $slide )
+		{
+			$ul->insert( $slide );
+		}
+
+		echo $ul;
+	}
+	public static function setup()
+	{
+
+		add_image_size( 'rotator-thumbnail', self::$width, self::$height, false );
+		add_action( 'wp_head', '\RoboRotator::load_css_file' );
+		
+		self::$setup = true;
+	}
+
+	public static function load_css_file()
+	{
+		if( ! file_exists( THEME_PATH . 'css/rotator.css' ) )
+		{
+			return false;
+		}
+
+		$link = new link("\t\t");
+		$link->rel = 'stylesheet';
+		$link->href = THEME_DIR . '/css/rotator.css';
+
+		echo $link;
+	}
+
+	public static function get_posts()
+	{
+    	query_posts( 'post_type=rotator&posts_per_page=6&orderby=date&order=DESC' );
+
+		if( ! have_posts() )
+		{
+			return false;
+		}
+
+		while( have_posts() )
+		{
+			the_post();
+
+			self::build_slide();
+			self::$total_posts++;
+		}
+
+	}
+
+	public static function build_slide()
+	{
+		$post_id = get_the_ID();
+		$rotator_slide_type = get_post_meta( $post_id, '_rotator_type', true );
+
+		switch( $rotator_slide_type )
+		{
+        	case 'link':
+				self::$slides[] = new RoboRotatorLinkSlide($post_id);
+				break;
+			case 'post':
+				self::$slides[] = new RoboRotatorPostSlide($post_id);
+				break;
+		}
 	}
 }
+
+/*
+ * Run our RoboRotator Setup Function
+ */
+RoboRotator::setup();
+/***********************************/
+
+class RoboRotatorSlide
+{
+	var $post_id = 0;
+	var $width = 0;
+	var $height = 0;
+    var $li = null;
+                                                    
+	public function init($post_id)
+	{
+		$this->post_id = $post_id;
+		$this->width = RoboRotator::$width;
+		$this->height = RoboRotator::$height;
+		$this->li = new li();
+		$this->li->class = "slide";
+		$this->li->id = 'slide-' . $this->post_id;
+	}
+
+	public function get_image()
+	{
+		return get_the_post_thumbnail( $post_id, 'rotator-thumbnail' );
+	}
+
+	public function get_image_src()
+	{
+		$id = get_post_thumbnail_id($this->post_id);
+		$image_data = wp_get_attachment_image_src( $id, 'rotator-thumbnail' );
+
+		return $image_data;
+	}
+
+	public function __toString()
+	{
+		return $this->build();
+	}
+
+	public function build()
+	{
+		return $this->li->html();
+	}
+
+	public function add_paragraph()
+	{
+		$p = new p();
+		$p->insert( get_the_content() );
+
+		return $p;
+	}
+}
+class RoboRotatorLinkSlide extends RoboRotatorSlide
+{
+
+	public function __construct($post_id)
+	{
+		$this->init($post_id);
+		$a = new a();
+		$this->set_link( &$a );
+
+		$this->li->class .= ' link-slide';
+		$this->li->insert( &$a )->insert( $this->get_image() );
+	}	
+
+	private function set_link( $a )
+	{
+	   $link = get_post_meta( $this->post_id, 'url-link', true );
+	   $a->href = $link;
+	}
+}
+/**
+ * Rotator Post Slide Class
+ *
+ * @todo Description
+ */
+class RoboRotatorPostSlide extends RoboRotatorSlide
+{
+
+	public function __construct($post_id)
+	{
+		$this->init($post_id);
+		$a = new a();
+		$this->set_link( &$a );
+
+		$this->li->class .= ' post-slide';
+		$image_data = $this->get_image_src();
+		$style = sprintf( "background: url(%s) no-repeat;width: %dpx;height: %dpx;", $image_data[0], $image_data[1], $image_data[2] );
+		$div = new div();
+		$div->style = $style;
+		$this->li->insert( &$a )->insert( &$div )->insert( $this->add_paragraph() );
+	}	
+
+	private function set_link( $a )
+	{
+	   $link = get_post_meta( $post_id, 'url-link', true );
+	   $a->href = $link;
+	}
+}
+
 ?>
