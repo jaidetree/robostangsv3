@@ -20,18 +20,18 @@
 	 slides : new Object(),
 
 	/**
-	* Total slides
-	*/
+	 * Total slides
+	 */
 	total_slides : 0,
 
 	/*
-	* The Interval Timer for when to change slides
-	*/
+	 * The Interval Timer for when to change slides
+	 */
 	interval: 0,
 
 	/*
-	* Default Settings
-	*/
+	 * Default Settings
+	 */
 	settings : {
 		'slide_duration' : 5000,
 		'padding' : 35,
@@ -45,7 +45,7 @@
 	 * @param {object} options The options to over-ride the default.
 	 * @return {object} The jQuery object for chainability
 	 * @member jTater
-	*/
+	 */
 	init : function( options ) { 
 
 		if( options ) {
@@ -67,8 +67,8 @@
 
 
 			/**
-			* Handle Events
-			*/
+			 * Handle Events
+			 */
 
 			$('#rotator-ui li a').click( methods.select_slide );
 
@@ -76,6 +76,15 @@
 
 	},
 
+    /**
+	 * Function Select Slide
+	 *
+	 * An event triggered when our UI bullet button is clicked.
+	 * @param {object} Event object.
+	 * @return bool
+	 * @member jTater
+	 * @private
+	 */
 	select_slide : function( event )
 	{
 		var index = $(this).attr('rel');
@@ -85,8 +94,16 @@
 		methods.current_slide = index;
 
 		methods.start_rotating();
+		return false;
 	},
 
+	/**
+	 * Function Slide To
+	 *
+	 * Uses slide index to slide to that slide.
+	 * @param {Number} slide_index 0 Based Slide Index to Slide to
+	 * @member jTater
+	 */
 	slide_to : function( slide_index )
 	{
 		var current_index = methods.current_slide;
@@ -98,6 +115,12 @@
 			});
 	},
 
+	/**
+	 * Function Set Container Width
+	 *
+	 * Makes sure the parent ul is the horizontal width of all
+	 * the slides plus their margin.
+	 */
 	set_container_width : function(slides_ul) {
 
 		var total_width = 0;
@@ -111,27 +134,60 @@
 		$(methods.slides).css( 'width', total_width );
 	},
 
+	/**
+	 * Function Set Slides
+	 *
+	 * Initiating function that locally stores our slides 
+	 * container DOM tree.
+	 * @private
+	 * @param {Object} slides_ul The jQuery selected objects
+	 * @member jTater
+	 */
 	set_slides : function( slides_ul )
 	{
 		methods.slides = slides_ul;
 		methods.total_slides = $('li', slides_ul).length;
 	},
                                             
+	/**
+	 * Function Start Rotating
+	 *
+	 * Starts rotating the slides. Can be stopped when you want to puse.
+	 * @method jTater
+	 */
 	start_rotating : function()
 	{
 		methods.interval = setInterval( methods.rotate_slide, methods.settings.slide_duration );
 	},
 
+	/**
+	 * Function Stop Rotating
+	 *
+	 * Stops rotating the slides.
+	 * @member jTater
+	 */
 	stop_rotating : function()
 	{
 		clearInterval( methods.interval );
 	},
 
+	/**
+	 * Function Rotate Slide
+	 * 
+	 * Trigged from our Interval. Tells the rotator to get the next slide.
+	 * @member jTater
+	 */
 	rotate_slide : function()
 	{
 		methods.next_slide();
 	},
-
+    /**
+	 * Function Next Slide
+	 *
+	 * Selects, animates, or resets the next slide. If we're at the last one
+	 * Animate it back to the first.
+	 * @member jTater
+	 */
 	next_slide : function()
 	{
 
@@ -148,14 +204,12 @@
 
 	},
 
-	reposition_slide : function( slide_index )
-	{
-		var slide = $( 'li:eq(' + slide_index + ')', methods.slides );
-		console.log( slide );
-		$(methods.slides).remove( slide );
-		$(methods.slides).append( slide );
-	},
-
+	/**
+	 * Function Reposition Slides
+	 *
+	 * Animates the slides back to the beginning when at the last slide.
+	 * @member jTater
+	 */
 	reposition_slides : function ()
 	{
 		$(methods.slides).animate( {
@@ -163,16 +217,14 @@
 			} );
 	},
 
-	animate_slide : function( slide_index )
-	{
-		var slides = $( methods.slides );
-		var width = methods.calculate_slide_position( slide_index );
-		
-		$(slides).animate( { 
-				'margin-left' : -(width) 
-			} );
-	},
-
+	/**
+	 * Function Calculate Slide Position
+	 *
+	 * Calculates the distance to show that slide in the rotator frame.
+	 * Takes the current slide index multiplied by the width of the slide.
+	 * @param {Number} slide_index the slide to calculate the distance to.
+	 * @member jTater
+	 */
 	calculate_slide_position : function( slide_index )
 	{
 		var width = $('li:eq(' + slide_index + ')', methods.slides).width();
@@ -181,6 +233,13 @@
 		return width;
 	},
 
+	/**
+	 * Function Update UI
+	 *
+	 * Updates the rotator user interface by showing which link was selected.
+	 * @param {Number} slide_index the index to show selected
+	 * @member jTater
+	 */
 	update_ui : function( slide_index )
 	{
 		var rotator_ui = $(methods.slides).siblings( '#rotator-ui' ).children( 'ul' );
@@ -191,6 +250,12 @@
 
   };
 
+  /**
+   * Main Plugin Logic
+   *
+   * Our self contained jTater class object handler thing.
+   * $('slider-container').jTater( {Object} options );
+   */
   $.fn.jTater = function( method ) {
     
     // Method calling logic
