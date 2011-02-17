@@ -23,4 +23,11 @@ get_header(); ?>
 			</div><!-- #content -->
 		</div><!-- #container -->
 
+<script>
+(function( $ ){
+	$(document).ready( function (){
+		$('#rotator-slides').jTater();
+	});
+})( jQuery );
+</script>
 <?php get_footer(); ?>

@@ -25,9 +25,8 @@
 	 * Controls our main logic, gathers the slides, finds the next one.
 	 * Sets the event handlers. Whatever needs to be done.
 	 * @param {object} options The options to over-ride the default.
-	 * @constructor
 	 * @return {object} The jQuery object for chainability
-	 * @member JTater
+	 * @member jTater
 	*/
 	init : function( options ) { 
 		var settings = {
@@ -66,7 +65,7 @@
 	
   };
 
-  $.fn.JTater = function( method ) {
+  $.fn.jTater = function( method ) {
     
     // Method calling logic
     if ( methods[method] ) {
