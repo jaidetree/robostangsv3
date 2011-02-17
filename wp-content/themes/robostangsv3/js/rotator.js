@@ -22,12 +22,20 @@
 	/**
 	* Total slides
 	*/
-    total_slides : 0,
+	total_slides : 0,
 
-	 /*
-	 * The Interval Timer for when to change slides
-	 */
-	 interval: 0,
+	/*
+	* The Interval Timer for when to change slides
+	*/
+	interval: 0,
+
+	/*
+	* Default Settings
+	*/
+	settings : {
+		'slide_duration' : 5000,
+		'padding' : 35,
+	},
 
 	/**
 	 * Initiator Function
@@ -39,12 +47,9 @@
 	 * @member jTater
 	*/
 	init : function( options ) { 
-		var settings = {
-			'direction' : 'up'
-		};
 
 		if( options ) {
-			$.extend( settings, options );
+			$.extend( methods.settings, options );
 		}
 
 
@@ -60,20 +65,48 @@
             methods.set_container_width($this);
 			methods.start_rotating();
 
+
+			/**
+			* Handle Events
+			*/
+
+			$('#rotator-ui li a').click( methods.select_slide );
+
 		} );
 
+	},
+
+	select_slide : function( event )
+	{
+		var index = $(this).attr('rel');
+		methods.stop_rotating();
+		methods.slide_to( index );
+		methods.update_ui( index );
+		methods.current_slide = index;
+
+		methods.start_rotating();
+	},
+
+	slide_to : function( slide_index )
+	{
+		var current_index = methods.current_slide;
+        var width = methods.calculate_slide_position( slide_index );
+		var up_to_width = width;
+
+		$(methods.slides).animate( {
+				'margin-left' : -(up_to_width)
+			});
 	},
 
 	set_container_width : function(slides_ul) {
 
 		var total_width = 0;
-		var padding = 35;
 
 		$('li', slides_ul).each( function() {
 			   total_width += $(this).width();
 		} );
 
-		total_width += padding * methods.total_slides;
+		total_width += methods.settings.padding * methods.total_slides;
 
 		$(methods.slides).css( 'width', total_width );
 	},
@@ -83,10 +116,10 @@
 		methods.slides = slides_ul;
 		methods.total_slides = $('li', slides_ul).length;
 	},
-
+                                            
 	start_rotating : function()
 	{
-		methods.interval = setInterval( methods.rotate_slide, 5000 );
+		methods.interval = setInterval( methods.rotate_slide, methods.settings.slide_duration );
 	},
 
 	stop_rotating : function()
@@ -96,23 +129,23 @@
 
 	rotate_slide : function()
 	{
-		console.log( 'rotated' );
 		methods.next_slide();
 	},
 
 	next_slide : function()
 	{
-		console.log( 'Reposition: slide: ' + methods.current_slide );
-		methods.current_slide++;	
 
-		
-		if( methods.current_slide >= methods.total_slides )
+		if( methods.current_slide == methods.total_slides - 1 )
 		{
-			methods.current_slide = 0;
+			methods.reposition_slides();
+            methods.current_slide = 0;
+		}else{
+			methods.current_slide++;	
+			methods.slide_to( methods.current_slide );
 		}
 
-		methods.reposition_slide( 0 );
-		console.log( 'Switch to slide: ' + methods.current_slide );
+		methods.update_ui( methods.current_slide );
+
 	},
 
 	reposition_slide : function( slide_index )
@@ -121,8 +154,41 @@
 		console.log( slide );
 		$(methods.slides).remove( slide );
 		$(methods.slides).append( slide );
+	},
+
+	reposition_slides : function ()
+	{
+		$(methods.slides).animate( {
+				'margin-left' : 0
+			} );
+	},
+
+	animate_slide : function( slide_index )
+	{
+		var slides = $( methods.slides );
+		var width = methods.calculate_slide_position( slide_index );
+		
+		$(slides).animate( { 
+				'margin-left' : -(width) 
+			} );
+	},
+
+	calculate_slide_position : function( slide_index )
+	{
+		var width = $('li:eq(' + slide_index + ')', methods.slides).width();
+		width = ( width + methods.settings.padding - 4 ) * slide_index;   
+		
+		return width;
+	},
+
+	update_ui : function( slide_index )
+	{
+		var rotator_ui = $(methods.slides).siblings( '#rotator-ui' ).children( 'ul' );
+
+		$('a', rotator_ui).removeClass( 'selected' );
+		$( 'li:eq(' + slide_index + ')', rotator_ui ).children( 'a' ).addClass( 'selected' );
 	}
-	
+
   };
 
   $.fn.jTater = function( method ) {
