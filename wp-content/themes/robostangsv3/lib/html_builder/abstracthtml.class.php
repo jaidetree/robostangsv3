@@ -8,6 +8,10 @@
  * @version 1.0
  * @package RoboStangs2011
  */
+if( class_exists( 'HTML' ) )
+{
+	return;
+}
 /**
  * HTML Class
  *

@@ -39,9 +39,8 @@ class RoboRotator
 	public static function build_ui()
 	{
 
-		$div = new div();
 		$ul = new ul();
-		$div->id = 'rotator-ui';
+		$ul->id = "rotator-ui";
 		$ul->class = 'clearfix';
 
 		for( $i = 0; $i < self::$total_posts; $i++ )
@@ -50,9 +49,8 @@ class RoboRotator
 	  	}
 
 
-		$div->insert( $ul );
 
-		echo $div;
+		echo $ul;
 	}	
 
 	public static function build_ui_control()
@@ -94,7 +92,7 @@ class RoboRotator
 	{
 
 		add_image_size( 'rotator-thumbnail', self::$width, self::$height, false );
-		add_action( 'wp_head', '\RoboRotator::load_css_file' );
+		add_action( 'wp_head', array( 'RoboRotator','load_css_file' ) );
 		
 		self::$setup = true;
 	}
@@ -278,11 +276,14 @@ class RoboRotatorYoutubeSlide extends RoboRotatorSlide
 		$this->init($post_id);
 		$video_id = $this->get_video_id();
 
+		$origin = rawurlencode( $_SERVER['HTTP_HOST'] );
+
 		$iframe = new iframe();
 		$iframe->title = 'Youtube Video Player';
 		$iframe->width = 597;
-		$iframe->height = 300;
-		$iframe->src = "http://www.youtube.com/embed/{$video_id}?wmode=transparent";
+		$iframe->height = 321;
+		$iframe->id = 'youtube-player-' . $post_id;
+		$iframe->src = "http://www.youtube.com/embed/{$video_id}?wmode=transparent&enablejsapi=1&origin=$origin";
 		$iframe->frameborder = 0;
 		$iframe->allowfullscreen = true;
 

@@ -7,6 +7,10 @@
  * @version 1.0
  * @package RoboStangs2011
  */
+if( ! class_exists( 'FormInputClass' ) )
+{
+	include THEME_LIB_DIR . 'form_builder/abstractform.class.php';
+}
 /**
  * Our SelectInput class
  *

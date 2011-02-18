@@ -8,6 +8,10 @@
  * @version 1.0
  * @package RoboStangs2011
  */
+if( class_exists( 'FormInputClass' ) )
+{
+	return false;
+}
 /**
  * Our main abstract class
  *

@@ -8,6 +8,10 @@
  * @version 1.0
  * @package RoboStangs2011
  */
+if( ! class_exists( 'HTML' ) )
+{
+	include THEME_LIB_DIR . 'html_builder/abstracthtml.class.php';
+}
 /**
  * HTML Abstraction Sub Class
  *
