@@ -242,7 +242,9 @@
 	 */
 	update_ui : function( slide_index )
 	{
-		var rotator_ui = $(methods.slides).siblings( '#rotator-ui' ).children( 'ul' );
+		var rotator_ui = $(methods.slides).parent('div').siblings( '#rotator-ui' ).children( 'ul' );
+
+		console.log( rotator_ui );
 
 		$('a', rotator_ui).removeClass( 'selected' );
 		$( 'li:eq(' + slide_index + ')', rotator_ui ).children( 'a' ).addClass( 'selected' );

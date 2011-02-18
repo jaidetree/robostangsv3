@@ -1,14 +1,17 @@
-#rotator-slides
+#rotator-container
 {
 	margin-top: 11px;
+	width: 597px;
+	height: 321px;
+	margin-left: 11px;
+	overflow: hidden;
 }
 #rotator-slides .slide
 {
-	margin-bottom: 20px;
-	margin-left: 11px;
 	width: 597px;
 	height: 321px;
 	overflow: hidden;
+	float:left;
 }
 #rotator-slides a
 {
@@ -18,9 +21,6 @@
 #rotator-slides .post-slide div
 {
 	position: relative;
-	-webkit-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.6);
-	-moz-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.6);
-	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.6);
 }
 #rotator-slides .post-slide h2
 {

@@ -75,15 +75,20 @@ class RoboRotator
 
 	public static function build_slides()
 	{
+		$div = new div();
+		$div->id = "rotator-container";
+
 		$ul = new ul();
 		$ul->id = "rotator-slides";
+		$ul->classname = "clearfix";
 
 		foreach( self::$slides as $slide )
 		{
 			$ul->insert( $slide );
 		}
 
-		echo $ul;
+		$div->insert($ul);
+		echo $div;
 	}
 	public static function setup()
 	{
