@@ -63,6 +63,7 @@
 
 			methods.set_slides( $this );
             methods.set_container_width($this);
+			//methods.set_youtube_api();
 			methods.start_rotating();
 
 
@@ -71,9 +72,20 @@
 			 */
 
 			$('#rotator-ui li a').click( methods.select_slide );
-
+            $('.slide', methods.slides).mouseenter( methods.stop_rotating );
+			$('.slide', methods.slides).mouseleave( methods.start_rotating );
 		} );
 
+	},
+
+	set_youtube_api : function( )
+	{
+		if( $(".youtube-slide").length == 0 )
+		{
+			return false;
+		}
+
+		$.getScript( 'http://www.youtube.com/player_api' );
 	},
 
     /**
@@ -155,8 +167,12 @@
 	 * Starts rotating the slides. Can be stopped when you want to puse.
 	 * @method jTater
 	 */
-	start_rotating : function()
+	start_rotating : function(event)
 	{
+		if( methods.interval != 0 )
+		{
+			return;
+		}
 		methods.interval = setInterval( methods.rotate_slide, methods.settings.slide_duration );
 	},
 
@@ -166,9 +182,10 @@
 	 * Stops rotating the slides.
 	 * @member jTater
 	 */
-	stop_rotating : function()
+	stop_rotating : function(event)
 	{
 		clearInterval( methods.interval );
+		methods.interval = 0;
 	},
 
 	/**
@@ -242,9 +259,7 @@
 	 */
 	update_ui : function( slide_index )
 	{
-		var rotator_ui = $(methods.slides).parent('div').siblings( '#rotator-ui' ).children( 'ul' );
-
-		console.log( rotator_ui );
+		var rotator_ui = $(methods.slides).parent('div').siblings( '#rotator-ui' );
 
 		$('a', rotator_ui).removeClass( 'selected' );
 		$( 'li:eq(' + slide_index + ')', rotator_ui ).children( 'a' ).addClass( 'selected' );
@@ -266,10 +281,40 @@
     } else if ( typeof method === 'object' || ! method ) {
       return methods.init.apply( this, arguments );
     } else {
-      $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
+      $.error( 'Method ' +  method + ' does not exist on jQuery.jTater' );
     }    
   
   };
 
 })( jQuery );
 
+/*
+var player = null;
+function onYouTubePlayerAPIReady()
+{ 
+	jQuery(".youtube-slide").each( function(){ 
+	   var id = jQuery(this).attr( 'id' );
+		player = new YT.Player( id, { 
+			events: {	
+				'onReady' : youtube_ready,
+				'onStateChange' : youtube_state_change
+			}
+		} );
+		
+	});
+
+}
+
+function youtube_ready( event )
+{
+}
+function youtube_state_change( event )
+{
+	if( event.data == YT.PlayerState.PLAYING )
+	{
+	}
+	else if( event.data == YT.PlayerState.ENDED )
+	{
+	}
+}                 
+*/
